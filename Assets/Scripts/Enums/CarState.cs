@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Enums
 {
-    internal enum CarState
+    public enum CarState
     {
         Normal,
         Immune,

@@ -22,6 +22,12 @@ public class RoadGenerator : MonoBehaviour {
 
     public RoadPart currentRoad;
 
+    public Obstacle CurrentObstacle {
+        get {
+            return null;
+        }
+    }
+
     List<RoadPart> roadParts = new List<RoadPart>();
 
     Obstacle currentObstacle = null;
