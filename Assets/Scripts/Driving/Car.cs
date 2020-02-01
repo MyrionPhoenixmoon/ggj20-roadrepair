@@ -11,6 +11,8 @@
 
     public class Car : MonoBehaviour
     {
+        private const float AngularVelocityCap = 2f;
+
         private const float BreakingFactor = -4.5f;
 
         private const float InertiaDampenerFactor = -.05f;
