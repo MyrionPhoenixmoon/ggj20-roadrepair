@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7233543458012791289}
   - component: {fileID: 1817681614130068431}
   - component: {fileID: 5333733824237979446}
+  - component: {fileID: -7701483881695117292}
   m_Layer: 0
   m_Name: Palm_A
   m_TagString: Untagged
@@ -79,3 +80,15 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-7701483881695117292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925027007550387178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d31b59a2e4cc548b2104458ada5722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

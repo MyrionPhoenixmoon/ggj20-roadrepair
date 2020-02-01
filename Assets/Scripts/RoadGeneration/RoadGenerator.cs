@@ -20,7 +20,11 @@ public class RoadGenerator : MonoBehaviour {
     public RoadPart lastRoad;
     public RoadPart fistRoad;
 
+    public RoadPart currentRoad;
+
     List<RoadPart> roadParts = new List<RoadPart>();
+
+    Obstacle currentObstacle = null;
 
     void Awake() {
         for (int i = 0; i < StartParts.Length; i++) {
@@ -67,6 +71,7 @@ public class RoadGenerator : MonoBehaviour {
         newPart.transform.parent = this.transform;
         newPart.transform.position = new Vector3(lastRoad.transform.position.x + lastRoad.Length / 2 + newPart.Length/2, 0, 0);
         lastRoad = roadParts[roadParts.Count - 1];
+        newPart.Init();
     }
 
     void ClearRoad() {
@@ -77,6 +82,10 @@ public class RoadGenerator : MonoBehaviour {
     }
 
     List<RoadPart> SpawnedRoad = new List<RoadPart>();
+
+    void GetNextObstacle() {
+
+    }
 
 }
 

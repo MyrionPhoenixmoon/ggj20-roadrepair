@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-
+    public GameObject Repaired;
+    public GameObject Broken;
     public ObstacleType Type;
 
     // Start is called before the first frame update
@@ -17,6 +18,15 @@ public class Obstacle : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Repair() {
+        if (Repaired!=null) {
+            Repaired.SetActive(true);
+        }
+        if (Broken!=null) {
+            Destroy(Broken.gameObject);
+        }
     }
 }
 
