@@ -27,6 +27,8 @@
 
         public int Speed { get; private set; }
 
+        public CarState State { get; private set; }
+
         private void ApplyDirections(float acceleration, bool isBreaking, float turningDirection)
         {
             var velocity = this.RigidBody.velocity.magnitude;
@@ -130,6 +132,13 @@
             return turningDirection;
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            object a = new object();
+            var b = a as string;
+
+        }
+
         private void SetSpeed()
         {
             this.Speed = (int)(this.RigidBody.velocity.magnitude * 10);
@@ -142,6 +151,8 @@
 
             this.RigidBody.maxAngularVelocity = AngularVelocityCap;
             this.maxSpeed = 30;
+
+            this.State = CarState.Normal;
 
             this.currentForces = new Dictionary<string, float>();
             this.axis = new List<string>();
