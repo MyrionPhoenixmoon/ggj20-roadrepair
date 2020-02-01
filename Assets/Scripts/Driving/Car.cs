@@ -29,15 +29,21 @@
 
         private void ApplyDirections(float acceleration, bool isBreaking, float turningDirection)
         {
+            var velocity = this.RigidBody.velocity.magnitude;
+
+            this.RigidBody.maxAngularVelocity = AngularVelocityCap - (0.03f * velocity);
+
+            if (velocity < 2f)
+            {
+                this.RigidBody.angularVelocity = new Vector3(0, 0, 0);
+                turningDirection = 0;
+            }
+
             if (Math.Abs(acceleration) > .3f)
             {
-                var velocity = this.RigidBody.velocity.magnitude;
-
-                this.RigidBody.maxAngularVelocity = AngularVelocityCap - (float)Math.Log(velocity);
-
                 this.RigidBody.velocity = isBreaking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
 
-                this.RigidBody.AddRelativeForce(0, 0, acceleration * 150);
+                this.RigidBody.AddRelativeForce(0, 0, acceleration * 100);
                 this.RigidBody.AddRelativeTorque(0, turningDirection * 100, 0);
             }
             else
@@ -49,6 +55,7 @@
                         this.RigidBody.velocity.y * InertiaDampenerFactor,
                         this.RigidBody.velocity.z * InertiaDampenerFactor);
                     this.RigidBody.AddForce(inertiaDampener);
+
                     this.RigidBody.AddRelativeTorque(0, turningDirection * 100, 0);
                     this.RigidBody.AddRelativeForce(
                         new Vector3(turningDirection * this.RigidBody.velocity.magnitude, 0, 0));
