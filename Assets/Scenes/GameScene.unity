@@ -262,7 +262,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a5f97b948742cf4683367951de95abc, type: 2}
+  - {fileID: 2100000, guid: 7f75b1749577f6045a0b7e2a64735a03, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -389,6 +389,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5b6a95e53a5a4e4bbbea73187690eea, type: 3}
+--- !u!1 &1394280153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: e5b6a95e53a5a4e4bbbea73187690eea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1394280152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1394280154
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394280153}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5277872, y: 1.2325538, z: 4.949284}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1394280155
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394280153}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!4 &1394280158 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: e5b6a95e53a5a4e4bbbea73187690eea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1394280152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1394280159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394280153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870378bda8fe47542b917b785bb84c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1536895769
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d342ce18eece36742846a7d27bad9310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1269554289}
+  Target: {fileID: 1394280158}
 --- !u!1 &1744824827
 GameObject:
   m_ObjectHideFlags: 0
