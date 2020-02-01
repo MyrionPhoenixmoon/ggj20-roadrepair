@@ -22,6 +22,7 @@ public class RoadPart : MonoBehaviour {
     //Clear the object (delete it, or better use object pool).
     public void Clear() {
 
+        Destroy(this.gameObject);
     }
 
     public float RoadStart {
