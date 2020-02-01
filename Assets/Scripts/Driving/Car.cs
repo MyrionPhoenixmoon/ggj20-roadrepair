@@ -28,9 +28,9 @@
         private float GatherAcceleration()
         {
             var acceleration = 0f;
-            if (this.currentForces.ContainsKey(Axis.Horizontal.ToString()))
+            if (this.currentForces.ContainsKey(Axis.Vertical.ToString()))
             {
-                acceleration = this.currentForces[Axis.Horizontal.ToString()];
+                acceleration = this.currentForces[Axis.Vertical.ToString()];
             }
 
             return acceleration;
@@ -58,9 +58,9 @@
         private float GatherTurningDirection()
         {
             var turningDirection = 0f;
-            if (this.currentForces.ContainsKey(Axis.Vertical.ToString()))
+            if (this.currentForces.ContainsKey(Axis.Horizontal.ToString()))
             {
-                turningDirection = this.currentForces[Axis.Vertical.ToString()];
+                turningDirection = this.currentForces[Axis.Horizontal.ToString()];
             }
 
             return turningDirection;
