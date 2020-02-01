@@ -414,6 +414,7 @@ MonoBehaviour:
     PossibleRoads:
     - {fileID: 3460912010019787355, guid: 34779faa097efbe479ab2f3940a0b1bf, type: 3}
     - {fileID: 7252124004336456644, guid: f44ede85a82d90c44adbb1b03771c2ea, type: 3}
+    - {fileID: 7194183753027943271, guid: 937ba239c59be5349bb64c46b6d61ac8, type: 3}
   - StreetStart: 2
     PossibleRoads:
     - {fileID: 5503263588087918116, guid: 65cb34015981c2b41b4495d0edd05b35, type: 3}

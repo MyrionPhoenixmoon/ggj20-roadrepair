@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6885731952614129578}
   - component: {fileID: 915217887203214163}
   - component: {fileID: 1696296530305721191}
+  - component: {fileID: -2059676725319008163}
   m_Layer: 0
   m_Name: 3_3
   m_TagString: Untagged
@@ -95,3 +96,18 @@ MonoBehaviour:
   StreetEnd: 2
   Length: 120
   PotentialObstacles: []
+  PotentialDekos: []
+--- !u!64 &-2059676725319008163
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481499411128711055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -900613806760981310, guid: 1fa59b33b76b95f4a8ab9f4ca08bb2b9, type: 3}

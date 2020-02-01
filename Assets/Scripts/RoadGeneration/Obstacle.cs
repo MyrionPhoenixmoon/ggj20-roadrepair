@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+
+    public ObstacleType Type;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +18,12 @@ public class Obstacle : MonoBehaviour
     {
         
     }
+}
+
+
+public enum ObstacleType {
+    Powerup,
+    Crash,
+    Drift,
+    Slowdown,
 }
