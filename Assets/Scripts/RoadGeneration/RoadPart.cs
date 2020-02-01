@@ -14,6 +14,9 @@ public class RoadPart : MonoBehaviour {
 
     public ObstaclePosition[] PotentialObstacles;
 
+    public DekoPosition[] PotentialDekos;
+
+
     //initialize this part of the road (difficulty might later be used)
     public void Init(float difficulty = 0) {
 
@@ -52,10 +55,25 @@ public class ObstaclePosition {
 
 }
 
+
 public enum LaneNumber {
     first,
     second,
     third,
     forth,
     fifth
+}
+
+[System.Serializable]
+public class DekoPosition {
+    // Where can it spawn?
+    public Transform Position;
+    // Which deko elements can be spawned?
+    public DekoElement[] PotentialDekoElements;
+
+    //Spawn the obstacle (difficultyy might later be used).
+    public void Spawn(float difficulty = 0) {
+
+    }
+
 }
