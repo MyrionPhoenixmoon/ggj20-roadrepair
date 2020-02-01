@@ -11,7 +11,9 @@
 
     public class Car : MonoBehaviour
     {
-        private readonly float breakingFactor = -1.5f;
+        private const float BreakingFactor = -4.5f;
+
+        private const float InertiaDampenerFactor = -3f;
 
         private List<string> axis;
 
@@ -68,8 +70,9 @@
         private void Start()
         {
             this.RigidBody = this.gameObject.GetComponent<Rigidbody>();
+
             this.RigidBody.maxAngularVelocity = 2;
-            this.maxSpeed = 50;
+            this.maxSpeed = 30;
 
             this.currentForces = new Dictionary<string, float>();
             this.axis = new List<string>();
@@ -87,18 +90,33 @@
             var acceleration = this.GatherAcceleration();
             var turningDirection = this.GatherTurningDirection();
             var isBreaking = this.GatherBreaking();
+            //if (Math.Abs(acceleration) > .3f)
+            //{
+                this.RigidBody.velocity = isBreaking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
 
-            this.RigidBody.velocity = isBreaking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
-
-            this.RigidBody.AddRelativeForce(0, 0, acceleration * 80);
-            this.RigidBody.AddRelativeTorque(0, turningDirection * 100, 0);
+                this.RigidBody.AddRelativeForce(0, 0, acceleration * 150);
+                this.RigidBody.AddRelativeTorque(0, turningDirection * 100, 0);
+            //}
+            //else
+            //{
+            //    if (Math.Abs(turningDirection) > .1f)
+            //    {
+            //        var inertiaDampener = new Vector3(
+            //            this.RigidBody.velocity.x * InertiaDampenerFactor,
+            //            this.RigidBody.velocity.y * InertiaDampenerFactor,
+            //            this.RigidBody.velocity.z * InertiaDampenerFactor);
+            //        this.RigidBody.AddForce(inertiaDampener);
+            //        this.RigidBody.AddRelativeTorque(0, turningDirection * 100, 0);
+            //        this.RigidBody.AddRelativeForce(new Vector3(0, 50, 0));
+            //    }
+            //}
 
             if (this.RigidBody.velocity.magnitude > this.maxSpeed)
             {
                 var breakingForce = new Vector3(
-                    this.RigidBody.velocity.x * this.breakingFactor,
-                    this.RigidBody.velocity.y * this.breakingFactor,
-                    this.RigidBody.velocity.z * this.breakingFactor);
+                    this.RigidBody.velocity.x * BreakingFactor,
+                    this.RigidBody.velocity.y * BreakingFactor,
+                    this.RigidBody.velocity.z * BreakingFactor);
                 this.RigidBody.AddForce(breakingForce);
             }
 
