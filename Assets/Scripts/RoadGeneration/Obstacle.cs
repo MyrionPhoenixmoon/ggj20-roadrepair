@@ -8,17 +8,7 @@ public class Obstacle : MonoBehaviour
     public GameObject Broken;
     public ObstacleType Type;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Repair() {
         if (Repaired!=null) {
