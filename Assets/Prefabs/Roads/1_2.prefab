@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7043732333300545482}
   - component: {fileID: 5732793236194589852}
   - component: {fileID: -1497283127389336368}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: 1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +135,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 1_2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5e7ba1083610447479f7f3e6f5940688,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e7ba1083610447479f7f3e6f5940688, type: 3}
