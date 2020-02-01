@@ -121,7 +121,8 @@
                 this.RigidBody.AddForce(breakingForce);
             }
 
-            Debug.Log(this.RigidBody.velocity.magnitude);
+            Debug.Log(this.RigidBody.velocity.magnitude.ToString());
+            this.Speed = this.RigidBody.velocity.magnitude * 10;
         }
     }
 }
