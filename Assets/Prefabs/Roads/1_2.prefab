@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &2196965299019844607
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669049412890500905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -2302415920100202735, guid: 5e7ba1083610447479f7f3e6f5940688, type: 3}
 --- !u!1 &4539502602205054411
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +24,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7043732333300545482}
   - component: {fileID: 5732793236194589852}
-  - component: {fileID: -1497283127389336368}
   m_Layer: 8
   m_Name: 1_2
   m_TagString: Untagged
@@ -48,22 +61,10 @@ MonoBehaviour:
   StreetStart: 0
   StreetEnd: 1
   Length: 120
+  ObstacleProbability: 0.5
+  DecoProbability: 0.5
   PotentialObstacles: []
-  PotentialDekos: []
---- !u!64 &-1497283127389336368
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4539502602205054411}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 0}
+  PotentialDecos: []
 --- !u!1001 &8820614275208496672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,6 +144,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e7ba1083610447479f7f3e6f5940688, type: 3}
+--- !u!1 &669049412890500905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 5e7ba1083610447479f7f3e6f5940688,
+    type: 3}
+  m_PrefabInstance: {fileID: 8820614275208496672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4545162531073912122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 5e7ba1083610447479f7f3e6f5940688,

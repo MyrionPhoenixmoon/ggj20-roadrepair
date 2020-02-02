@@ -1,25 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using Assets.Scripts.Driving;
-
-public class MPHReader : MonoBehaviour
+﻿namespace Assets.Scripts.UI
 {
-    private Car car;
-    [SerializeField]
-    private Text text;
+    using Assets.Scripts.Driving;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        car = GameObject.FindObjectOfType<Car>();
-        
-    }
+    using UnityEngine;
+    using UnityEngine.UI;
 
-    // Update is called once per frame
-    void Update()
+    public class MPHReader : MonoBehaviour
     {
-        this.text.text = car.Speed.ToString();
+        private Car car;
+
+        [SerializeField]
+        private Text text;
+
+        // Start is called before the first frame update
+        private void Start()
+        {
+            this.car = GameObject.FindObjectOfType<Car>();
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+            this.text.text = this.car.CurrentSpeed.ToString();
+        }
     }
 }

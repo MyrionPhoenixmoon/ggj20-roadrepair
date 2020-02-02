@@ -1,15 +1,13 @@
-﻿Shader "Unlit/TextureVanishing"
+﻿Shader "Unlit/TransparentColor"
 {
     Properties
     {
 			_Color("Color", Color) = (1,1,1,1)
-			_MainTex ("Texture", 2D) = "white" {}
-			[IntRange] _Masked("Mask", Range(0,255)) = 1
-
+			//_MainTex ("Texture", 2D) = "white" {}
     }
     SubShader
     {
-        Tags { "RenderQueue"="Transparent" "RenderType" = "Transparent" }
+        Tags { "RenderType"="Opaque" "RenderType" = "Transparent" }
 
 			 Blend SrcAlpha OneMinusSrcAlpha
 			 Cull Off
@@ -17,12 +15,6 @@
 
         Pass
         {
-
-				Stencil {
-				Ref[_Masked]
-				Comp equal
-		}
-
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -44,8 +36,8 @@
                 float4 vertex : SV_POSITION;
             };
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
+            //sampler2D _MainTex;
+            //float4 _MainTex_ST;
 			fixed4 _Color;
 
 
@@ -53,16 +45,16 @@
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                //o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
+                //fixed4 col = tex2D(_MainTex, i.uv);
                 // apply fog
-                return fixed4(_Color.rgb, col.a);
+				return _Color;
             }
             ENDCG
         }
