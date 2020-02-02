@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5407729843938837825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5407729843938837855}
+  - component: {fileID: 5407729843938837854}
+  m_Layer: 0
+  m_Name: RoadGeneration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5407729843938837855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407729843938837825}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5407729843938837854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407729843938837825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ac573871b957f44b6d1df9efde38a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrontRoadLength: 240
+  BackRoadLength: 120
+  PlayerPosition: 0
+  Start: 0
+  End: 0
+  PlayerCar: {fileID: 0}
+  StartParts:
+  - {fileID: 0}
+  - {fileID: 0}
+  RoadTypes:
+  - StreetStart: 0
+    PossibleRoads:
+    - {fileID: 7591356370667764621, guid: d34a73a5690458f4fa5c1da6441deb6c, type: 3}
+  - StreetStart: 1
+    PossibleRoads:
+    - {fileID: 3460912010019787355, guid: 34779faa097efbe479ab2f3940a0b1bf, type: 3}
+    - {fileID: 7252124004336456644, guid: f44ede85a82d90c44adbb1b03771c2ea, type: 3}
+  - StreetStart: 2
+    PossibleRoads:
+    - {fileID: 5503263588087918116, guid: 65cb34015981c2b41b4495d0edd05b35, type: 3}
+    - {fileID: -4239641926189030839, guid: 65246ff4b607de64d886f3cfd760bcde, type: 3}
+    - {fileID: 1696296530305721191, guid: 738f98a455ec3ca4ca9848aaa409d208, type: 3}
+  lastRoad: {fileID: 0}
+  fistRoad: {fileID: 0}
+  currentRoad: {fileID: 0}
