@@ -642,6 +642,7 @@ MonoBehaviour:
   Player2Active: {fileID: 7063607}
   Player1Inactive: {fileID: 1584427750}
   Player2Inactive: {fileID: 1517524178}
+  startDelay: 0.5
 --- !u!4 &1398071775
 Transform:
   m_ObjectHideFlags: 0

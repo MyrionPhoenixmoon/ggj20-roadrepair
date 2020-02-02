@@ -187,10 +187,14 @@ MonoBehaviour:
   - StreetStart: 0
     PossibleRoads:
     - {fileID: 7591356370667764621, guid: d34a73a5690458f4fa5c1da6441deb6c, type: 3}
+    - {fileID: 5732793236194589852, guid: c8e9ddab0a7dc5f43988d1ddde88bbc8, type: 3}
+    - {fileID: 6047549589587014405, guid: dca2f4dc2f917ee4db4fd3caf2b99aed, type: 3}
+    - {fileID: 2731317272575739236, guid: 7e657a4d6e8f39842b0cd1f2ec354780, type: 3}
   - StreetStart: 1
     PossibleRoads:
     - {fileID: 3460912010019787355, guid: 34779faa097efbe479ab2f3940a0b1bf, type: 3}
     - {fileID: 7252124004336456644, guid: f44ede85a82d90c44adbb1b03771c2ea, type: 3}
+    - {fileID: 7194183753027943271, guid: 937ba239c59be5349bb64c46b6d61ac8, type: 3}
   - StreetStart: 2
     PossibleRoads:
     - {fileID: 5503263588087918116, guid: 65cb34015981c2b41b4495d0edd05b35, type: 3}

@@ -24,12 +24,6 @@ public class Obstacle : MonoBehaviour
             Destroy(Broken.gameObject);
         }
     }
-
-    public void OnTriggerEnter(Collider collider)
-    {
-        var collidingObject = collider.GetComponent<Car>();
-        collidingObject?.Triggered(this);
-    }
 }
 
 

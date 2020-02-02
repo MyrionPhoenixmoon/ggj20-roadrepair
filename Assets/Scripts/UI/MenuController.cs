@@ -43,7 +43,7 @@ public float startDelay;
 
         }
 
-        if (this.player1IsReady && this.player2IsReady){
+        if (this.player1IsReady && this.player2IsReady && !this.gameStarting){
             this.gameStarting = true;
             Invoke("startGame", this.startDelay);            
         }
