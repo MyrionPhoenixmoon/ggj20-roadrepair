@@ -161,7 +161,7 @@
         {
             if (this.sceneTransitionTrigger)
             {
-                this.WinOrLose();
+                this.Lose();
             }
 
             if (this.State == CarState.Dead)
@@ -243,6 +243,22 @@
             {
                 return;
             }
+
+            this.ResolveGameEnding(collider);
+            this.ResolveObstacleHit(collider);
+        }
+
+        private void ResolveGameEnding(Collider collider)
+        {
+            var finishLine = collider.GetComponent<FinishLine>();
+            if (finishLine != null)
+            {
+                this.Win();
+            }
+        }
+
+        private void ResolveObstacleHit(Collider collider)
+        {
             var obstacle = collider.GetComponent<Obstacle>();
             if (obstacle != null)
             {
@@ -326,22 +342,14 @@
             this.sceneTransitionTrigger = true;
         }
 
-        private void WinOrLose()
+        private void Win()
         {
+            SceneManager.LoadScene(2);
+        }
 
-            if (this.State != CarState.Dead)
-            {
-                SceneManager.LoadScene(2);
-            }
-            if (this.State == CarState.Dead)
-            {
-                SceneManager.LoadScene(3);
-            }
-            else
-            {
-                return;
-            }
-
+        private void Lose()
+        {
+            SceneManager.LoadScene(3);
         }
     }
 }
