@@ -25,26 +25,26 @@
 
         public Rigidbody RigidBody { get; private set; }
 
-        public int Speed { get; private set; }
+        public int CurrentSpeed { get; private set; }
 
         public CarState State { get; private set; }
 
         private void ApplyDirections(float acceleration, bool isBreaking, float turningDirection)
         {
+            var direction = this.DetermineCurrentCarDirection();
+            turningDirection *= direction;
+
             var velocity = this.RigidBody.velocity.magnitude;
 
-            this.RigidBody.maxAngularVelocity = AngularVelocityCap - (0.03f * velocity);
+            this.LimitTurningSpeed(ref turningDirection, velocity);
+            this.ApplyBreakingForce(isBreaking);
+            this.ApplyMovementToCar(acceleration, turningDirection);
+        }
 
-            if (velocity < 2f)
-            {
-                this.RigidBody.angularVelocity = new Vector3(0, 0, 0);
-                turningDirection = 0;
-            }
-
+        private void ApplyMovementToCar(float acceleration, float turningDirection)
+        {
             if (Math.Abs(acceleration) > .3f)
             {
-                this.RigidBody.velocity = isBreaking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
-
                 this.RigidBody.AddRelativeForce(0, 0, acceleration * 100);
                 this.RigidBody.AddRelativeTorque(0, turningDirection * 100, 0);
             }
@@ -63,6 +63,28 @@
                         new Vector3(turningDirection * this.RigidBody.velocity.magnitude, 0, 0));
                 }
             }
+        }
+
+        private void ApplyBreakingForce(bool isBreaking)
+        {
+            this.RigidBody.velocity = isBreaking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
+        }
+
+        private void LimitTurningSpeed(ref float turningDirection, float velocity)
+        {
+            this.RigidBody.maxAngularVelocity = AngularVelocityCap - (0.03f * velocity);
+
+            if (velocity < 2f)
+            {
+                this.RigidBody.angularVelocity = new Vector3(0, 0, 0);
+                turningDirection = 0;
+            }
+        }
+
+        private int DetermineCurrentCarDirection()
+        {
+            var direction = this.transform.InverseTransformVector(this.RigidBody.velocity).z > 0 ? 1 : -1;
+            return direction;
         }
 
         private void CapAtMaxSpeed()
@@ -88,7 +110,7 @@
 
             this.ApplyDirections(acceleration, isBreaking, turningDirection);
             this.CapAtMaxSpeed();
-            this.SetSpeed();
+            this.CurrentSpeed = (int)(this.RigidBody.velocity.magnitude * 10);
         }
 
         private float GatherAcceleration()
@@ -136,12 +158,6 @@
         {
             object a = new object();
             var b = a as string;
-
-        }
-
-        private void SetSpeed()
-        {
-            this.Speed = (int)(this.RigidBody.velocity.magnitude * 10);
         }
 
         // Start is called before the first frame update
