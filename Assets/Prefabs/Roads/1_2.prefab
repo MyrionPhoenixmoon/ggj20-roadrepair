@@ -142,7 +142,7 @@ MonoBehaviour:
   StreetEnd: 1
   Length: 120
   ObstacleProbability: 0.5
-  DecoProbability: 0.5
+  DecoProbability: 0.9
   PotentialObstacles:
   - Position: {fileID: 7794179451979515991}
     PotentialObstacle:

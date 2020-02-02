@@ -95,8 +95,10 @@ MonoBehaviour:
   StreetStart: 1
   StreetEnd: 2
   Length: 120
+  ObstacleProbability: 0.5
+  DecoProbability: 0.9
   PotentialObstacles: []
-  PotentialDekos: []
+  PotentialDecos: []
 --- !u!64 &6838298313087580330
 MeshCollider:
   m_ObjectHideFlags: 0
