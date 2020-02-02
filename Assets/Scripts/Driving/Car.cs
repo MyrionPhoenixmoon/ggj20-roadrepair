@@ -31,6 +31,7 @@
         private Timer sceneTransitionTimer;
 
         public int sceneTransitionDelay;
+
         private bool sceneTransitionTrigger = false;
 
         private Dictionary<string, float> currentForces;
@@ -169,22 +170,13 @@
 
             this.GetAxisValues();
 
-            float currentAcceleration;
-            float currentTurningDirection;
-            var isBraking = false;
+            var currentAcceleration = this.GetAcceleration();
+            var currentTurningDirection = this.GetTurningDirection();
+            var isBraking = this.CheckForBraking();
 
-
-            if (this.State != CarState.Wobbly)
+            if (this.State == CarState.Wobbly)
             {
-                currentAcceleration = this.GetAcceleration();
-                currentTurningDirection = this.GetTurningDirection();
-                isBraking = this.CheckForBraking();
-            }
-            else
-            {
-                var random = new Random();
-                currentAcceleration = (float)random.Next(-100, 100) / 100f;
-                currentTurningDirection = (float)random.Next(-100, 100) / 100f;
+                currentTurningDirection *= -1f;
             }
 
             this.ApplyDirections(currentAcceleration, isBraking, currentTurningDirection);

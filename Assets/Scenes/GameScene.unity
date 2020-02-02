@@ -1329,7 +1329,7 @@ PrefabInstance:
     - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
         type: 3}
       propertyPath: carEffectDuration
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
         type: 3}
