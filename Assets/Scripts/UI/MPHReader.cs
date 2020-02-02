@@ -21,7 +21,9 @@
         // Update is called once per frame
         private void Update()
         {
-            this.text.text = this.car.CurrentSpeed.ToString();
+            if (Time.frameCount % 4 == 0){
+                this.text.text = this.car.CurrentSpeed.ToString();
+            }
         }
     }
 }
