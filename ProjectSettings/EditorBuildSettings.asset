@@ -9,10 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScreen.unity
     guid: 99f5674887edfae499999522530b805a
   - enabled: 1
+    path: Assets/Scenes/AllTogether.unity
+    guid: 139e864537af1a8499018f73b465d45e
+  - enabled: 0
     path: Assets/Scenes/GameScene.unity
     guid: 5d73bce1f1811cb4f89e4384a0dc08a9
   - enabled: 0
-    path: Assets/Scenes/RoadGenerationTest 1.unity
+    path: Assets/__DELETED_GUID_Trash/2f730cd83a0e90a48b9ce64414f3dc00
     guid: 2f730cd83a0e90a48b9ce64414f3dc00
   - enabled: 1
     path: Assets/Scenes/WinScreen.unity
