@@ -8,9 +8,14 @@ public class RoadGenerator : MonoBehaviour {
     public float FrontRoadLength = 50;
     public float BackRoadLength = 20;
 
-    public float PlayerPosition;
+    float PlayerPosition;
     public float Start;
     public float End;
+
+    public float MinObstacleDistance = 50;
+    public float MaxObstacleDistance = 150;
+
+    public Transform Marker;
 
     public Transform PlayerCar;
     public RoadPart[] StartParts;
@@ -22,20 +27,29 @@ public class RoadGenerator : MonoBehaviour {
 
     public RoadPart currentRoad;
 
+
+
     public Obstacle CurrentObstacle {
         get {
-            return null;
+            if (currentObstacle==null && currentObstacle.transform.position.x - PlayerPosition <=MaxObstacleDistance) {
+                return currentObstacle;
+            } else {
+                return null;
+            }
         }
     }
 
     List<RoadPart> roadParts = new List<RoadPart>();
 
     Obstacle currentObstacle = null;
+    List<RoadPart> activeRoadParts = new List<RoadPart>();
+
 
     void Awake() {
         for (int i = 0; i < StartParts.Length; i++) {
             if (StartParts[i]!=null) {
                 roadParts.Add(StartParts[i]);
+
             }
         }
         fistRoad = roadParts[0];
@@ -45,6 +59,7 @@ public class RoadGenerator : MonoBehaviour {
 
     void Update() {
         CheckRoadSpawn();
+        checkForNewObstacle();
     }
 
 
@@ -74,6 +89,7 @@ public class RoadGenerator : MonoBehaviour {
         int rnd = Random.Range(0, RoadTypes[roadType].PossibleRoads.Length);
         RoadPart newPart = Instantiate(RoadTypes[roadType].PossibleRoads[rnd]);
         roadParts.Add(newPart);
+        activeRoadParts.Add(newPart);
         newPart.transform.parent = this.transform;
         newPart.transform.position = new Vector3(lastRoad.transform.position.x + lastRoad.Length / 2 + newPart.Length/2, 0, 0);
         lastRoad = roadParts[roadParts.Count - 1];
@@ -87,12 +103,31 @@ public class RoadGenerator : MonoBehaviour {
         fistRoad = roadParts[0];
     }
 
-    List<RoadPart> SpawnedRoad = new List<RoadPart>();
+    void checkForNewObstacle() {
 
-    void GetNextObstacle() {
-
+        if (currentObstacle==null) {
+            GetNextObstacle();
+        } else {
+            if (currentObstacle.transform.position.x-PlayerPosition <= MinObstacleDistance) {
+                GetNextObstacle();
+            }
+        }
+        
     }
 
+    void GetNextObstacle() {
+        if (activeRoadParts.Count < 1) {
+            return;
+        }
+        currentObstacle = activeRoadParts[0].GetNextObstacle();
+        if (currentObstacle == null) {
+            activeRoadParts.Remove(activeRoadParts[0]);
+            GetNextObstacle();
+        } else {
+            Marker.position = currentObstacle.transform.position;
+        }
+        
+    }
 }
 
 [System.Serializable]

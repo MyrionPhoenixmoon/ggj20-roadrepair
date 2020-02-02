@@ -64,7 +64,7 @@ public class RoadPart : MonoBehaviour {
         if (spawnedObstacles.Count<=currentObstacle) {
             return null;
         } else {
-            return spawnedObstacles[currentObstacle];
+            return spawnedObstacles[currentObstacle++];
         }
     }
 
