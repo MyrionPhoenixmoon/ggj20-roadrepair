@@ -16,7 +16,10 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters: []
-  m_AudioMixerGroupViews: []
+  m_AudioMixerGroupViews:
+  - guids:
+    - 458c2177f4bbe4031bdbc88fca0dea87
+    name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
@@ -34,6 +37,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
+  - {fileID: 2670258496816275182}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -61,5 +65,32 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 455b271065ef04538825b7f7c4c12beb
-  m_FloatValues: {}
+  m_FloatValues:
+    25c361702dd0c460294c4dc8e8b133fa: 56.874588
+    1df664422d585453d8bd4312afad61a8: 3
+    6b3417a726dcb4035b6117784a8cb7ca: 92.137375
+    cc76ffc7d3b76476fb2bf315d5df04c1: 1
+    031ca649266394a579b03e37f7d09fc5: -16.1
+    7c7d665a5437d415a9dae1607bfcd269: 2.189999
+    4a124b0d2a5404ee085d4014c1101531: 1
   m_TransitionOverrides: {}
+--- !u!244 &2670258496816275182
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: e06af7b439f954972a8eaedf5367126f
+  m_EffectName: ParamEQ
+  m_MixLevel: 6b9fc4b4e74fc41b6b675c3892ce6b94
+  m_Parameters:
+  - m_ParameterName: Center freq
+    m_GUID: 25c361702dd0c460294c4dc8e8b133fa
+  - m_ParameterName: Octave range
+    m_GUID: cc76ffc7d3b76476fb2bf315d5df04c1
+  - m_ParameterName: Frequency gain
+    m_GUID: 7c7d665a5437d415a9dae1607bfcd269
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
