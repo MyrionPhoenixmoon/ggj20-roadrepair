@@ -9,6 +9,7 @@
     using EnumsNET;
 
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     using Random = System.Random;
 
@@ -26,6 +27,10 @@
         private int carEffectDuration;
 
         private Timer carEffectTimer;
+        private Timer sceneTransitionTimer;
+
+        public int sceneTransitionDelay;
+        private bool sceneTransitionTrigger = false;
 
         private Dictionary<string, float> currentForces;
 
@@ -150,9 +155,14 @@
         // Update is called once per frame
         private void FixedUpdate()
         {
+            if (this.sceneTransitionTrigger){
+                this.WinOrLose();
+            }
+
             if (this.State == CarState.Dead)
             {
                 this.SetCurrentSpeed();
+                this.sceneTransitionTimer = new Timer(this.SetTransitionTrigger, null, this.sceneTransitionDelay * 1000, 0);
                 return;
             }
 
@@ -332,6 +342,24 @@
             {
                 this.axis.Add(((Axis)entry).AsString(EnumFormat.Description));
             }
+        }
+
+        private void SetTransitionTrigger(object state){
+            this.sceneTransitionTrigger = true;
+        }
+
+        private void WinOrLose(){
+        
+            if (this.State != CarState.Dead){
+                SceneManager.LoadScene(2);
+            }
+            if (this.State == CarState.Dead){
+                SceneManager.LoadScene(3);
+            }
+            else {
+                return;
+            }
+
         }
     }
 }
