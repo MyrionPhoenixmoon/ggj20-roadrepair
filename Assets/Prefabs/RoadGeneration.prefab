@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 939048381}
   - component: {fileID: 939048380}
   - component: {fileID: 939048379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1845703026}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5407729843938837855}
   - component: {fileID: 5407729843938837854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RoadGeneration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,6 @@ MonoBehaviour:
     PossibleRoads:
     - {fileID: 5503263588087918116, guid: 65cb34015981c2b41b4495d0edd05b35, type: 3}
     - {fileID: -4239641926189030839, guid: 65246ff4b607de64d886f3cfd760bcde, type: 3}
-    - {fileID: 1696296530305721191, guid: 738f98a455ec3ca4ca9848aaa409d208, type: 3}
   NumberOfElements: 5
   EndParts:
   - {fileID: 5493785543907803763, guid: 004003b91860f2643be652cd516aeeec, type: 3}

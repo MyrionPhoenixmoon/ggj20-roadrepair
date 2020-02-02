@@ -1362,23 +1362,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 939048377, guid: b1538ce7584b5314c9e0f42fcc67b9c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1845703025, guid: b1538ce7584b5314c9e0f42fcc67b9c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5407729843938837825, guid: b1538ce7584b5314c9e0f42fcc67b9c5,
         type: 3}
       propertyPath: m_Name
       value: RoadGeneration
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407729843938837825, guid: b1538ce7584b5314c9e0f42fcc67b9c5,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5407729843938837854, guid: b1538ce7584b5314c9e0f42fcc67b9c5,
         type: 3}
