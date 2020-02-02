@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartScreen.unity
     guid: 99f5674887edfae499999522530b805a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameScene.unity
     guid: 5d73bce1f1811cb4f89e4384a0dc08a9
+  - enabled: 1
+    path: Assets/Scenes/RoadGenerationTest 1.unity
+    guid: 2f730cd83a0e90a48b9ce64414f3dc00
   m_configObjects: {}
