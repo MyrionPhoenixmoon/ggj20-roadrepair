@@ -27,6 +27,7 @@
         private int carEffectDuration;
 
         private Timer carEffectTimer;
+
         private Timer sceneTransitionTimer;
 
         public int sceneTransitionDelay;
@@ -162,7 +163,7 @@
             if (this.State == CarState.Dead)
             {
                 this.SetCurrentSpeed();
-                this.sceneTransitionTimer = new Timer(this.SetTransitionTrigger, null, this.sceneTransitionDelay * 1000, 0);
+                this.sceneTransitionTimer.Change(this.sceneTransitionDelay * 1000, 0);
                 return;
             }
 
@@ -237,38 +238,12 @@
             }
         }
 
-        public void Triggered(Obstacle obstacle)
+        private void OnTriggerEnter(Collider collider)
         {
             if (this.State == CarState.Dead)
             {
                 return;
             }
-
-            if (obstacle != null)
-            {
-                var obstacleType = obstacle.Type;
-                this.ResetTimerDuration();
-
-                if (this.State != CarState.Immune)
-                {
-                    switch (obstacleType)
-                    {
-                        case ObstacleType.Powerup:
-                            this.State = CarState.Immune;
-                            break;
-                        case ObstacleType.Drift:
-                            this.State = CarState.Wobbly;
-                            break;
-                        case ObstacleType.Slowdown:
-                            this.State = CarState.Slowed;
-                            break;
-                    }
-                }
-            }
-        }
-
-        private void OnTriggerEnter(Collider collider)
-        {
             var obstacle = collider.GetComponent<Obstacle>();
             if (obstacle != null)
             {
@@ -310,7 +285,7 @@
 
         private void ResetTimerDuration()
         {
-            this.carEffectTimer.Change(this.CarEffectDuration * 1000, Timeout.Infinite);
+            this.carEffectTimer.Change(this.CarEffectDuration * 1000, 0);
         }
 
         private void ResetCarState(object state)
@@ -318,6 +293,7 @@
             if (this.State != CarState.Dead)
             {
                 this.State = CarState.Normal;
+                Debug.Log("Normal again!");
             }
         }
 
@@ -335,6 +311,7 @@
 
             this.State = CarState.Normal;
             this.carEffectTimer = new Timer(this.ResetCarState);
+            this.sceneTransitionTimer = new Timer(this.SetTransitionTrigger);
 
             this.currentForces = new Dictionary<string, float>();
             this.axis = new List<string>();
