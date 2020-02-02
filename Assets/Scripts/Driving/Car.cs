@@ -1,9 +1,8 @@
-﻿using System.Threading;
-
-namespace Assets.Scripts.Driving
+﻿namespace Assets.Scripts.Driving
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
 
     using Assets.Scripts.Enums;
 
@@ -23,18 +22,65 @@ namespace Assets.Scripts.Driving
 
         private List<string> axis;
 
-        private Dictionary<string, float> currentForces;
-
         [SerializeField]
-        public int MaxSpeed { get; set; }
+        private int carEffectDuration;
 
         private Timer carEffectTimer;
 
-        public Rigidbody RigidBody { get; private set; }
+        private Dictionary<string, float> currentForces;
+
+        [SerializeField]
+        private int maxSpeed;
+
+        [SerializeField]
+        private float slowingFactor;
+
+        [SerializeField]
+        private float turningSpeed;
+
+        [SerializeField]
+        private float acceleration;
+
+        public float Acceleration
+        {
+            get => this.acceleration;
+            private set => this.acceleration = value;
+        }
+
+        public int CarEffectDuration
+        {
+            get => this.carEffectDuration;
+            private set => this.carEffectDuration = value;
+        }
 
         public int CurrentSpeed { get; private set; }
 
+        public int MaxSpeed
+        {
+            get => this.maxSpeed;
+            private set => this.maxSpeed = value;
+        }
+
+        public Rigidbody RigidBody { get; private set; }
+
+        public float SlowingFactor
+        {
+            get => this.slowingFactor;
+            private set => this.slowingFactor = value;
+        }
+
         public CarState State { get; private set; }
+
+        public float TurningSpeed
+        {
+            get => this.turningSpeed;
+            private set => this.turningSpeed = value;
+        }
+
+        private void ApplyBrakingForce(bool isBraking)
+        {
+            this.RigidBody.velocity = isBraking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
+        }
 
         private void ApplyDirections(float acceleration, bool isBraking, float turningDirection)
         {
@@ -83,36 +129,6 @@ namespace Assets.Scripts.Driving
             }
         }
 
-        public float SlowingFactor { get; set; }
-
-        [SerializeField]
-        public float TurningSpeed { get; set; }
-
-        [SerializeField]
-        public float Acceleration { get; set; }
-
-        private void ApplyBrakingForce(bool isBraking)
-        {
-            this.RigidBody.velocity = isBraking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
-        }
-
-        private void LimitTurningSpeed(ref float turningDirection, float velocity)
-        {
-            this.RigidBody.maxAngularVelocity = AngularVelocityCap - (0.03f * velocity);
-
-            if (velocity < 2f)
-            {
-                this.RigidBody.angularVelocity = new Vector3(0, 0, 0);
-                turningDirection = 0;
-            }
-        }
-
-        private int DetermineCurrentCarDirection()
-        {
-            var direction = this.transform.InverseTransformVector(this.RigidBody.velocity).z > 0 ? 1 : -1;
-            return direction;
-        }
-
         private void CapAtMaxSpeed()
         {
             if (this.RigidBody.velocity.magnitude > this.MaxSpeed)
@@ -125,6 +141,18 @@ namespace Assets.Scripts.Driving
             }
         }
 
+        private bool CheckForBraking()
+        {
+            var isbraking = this.currentForces.ContainsKey(Axis.Jump.ToString());
+            return isbraking;
+        }
+
+        private int DetermineCurrentCarDirection()
+        {
+            var direction = this.transform.InverseTransformVector(this.RigidBody.velocity).z > 0 ? 1 : -1;
+            return direction;
+        }
+
         // Update is called once per frame
         private void FixedUpdate()
         {
@@ -133,6 +161,7 @@ namespace Assets.Scripts.Driving
                 this.SetCurrentSpeed();
                 return;
             }
+
             this.GetAxisValues();
 
             var acceleration = this.GetAcceleration();
@@ -142,11 +171,6 @@ namespace Assets.Scripts.Driving
             this.ApplyDirections(acceleration, isBraking, turningDirection);
             this.CapAtMaxSpeed();
             this.SetCurrentSpeed();
-        }
-
-        private void SetCurrentSpeed()
-        {
-            this.CurrentSpeed = (int)(this.RigidBody.velocity.magnitude * 10);
         }
 
         private float GetAcceleration()
@@ -173,12 +197,6 @@ namespace Assets.Scripts.Driving
             }
         }
 
-        private bool CheckForBraking()
-        {
-            var isbraking = this.currentForces.ContainsKey(Axis.Jump.ToString());
-            return isbraking;
-        }
-
         private float GetTurningDirection()
         {
             var turningDirection = 0f;
@@ -188,6 +206,17 @@ namespace Assets.Scripts.Driving
             }
 
             return turningDirection;
+        }
+
+        private void LimitTurningSpeed(ref float turningDirection, float velocity)
+        {
+            this.RigidBody.maxAngularVelocity = AngularVelocityCap - (0.03f * velocity);
+
+            if (velocity < 3f)
+            {
+                this.RigidBody.angularVelocity = new Vector3(0, 0, 0);
+                turningDirection = 0;
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -240,10 +269,21 @@ namespace Assets.Scripts.Driving
                 }
             }
 
-            //TODO: Car goes booooom
+            // TODO: Car goes booooom
         }
 
-        public int CarEffectDuration { get; set; }
+        private void ResetCarState(object state)
+        {
+            if (this.State != CarState.Dead)
+            {
+                this.State = CarState.Normal;
+            }
+        }
+
+        private void SetCurrentSpeed()
+        {
+            this.CurrentSpeed = (int)(this.RigidBody.velocity.magnitude * 10);
+        }
 
         // Start is called before the first frame update
         private void Start()
@@ -251,11 +291,6 @@ namespace Assets.Scripts.Driving
             this.RigidBody = this.gameObject.GetComponent<Rigidbody>();
 
             this.RigidBody.maxAngularVelocity = AngularVelocityCap;
-            this.MaxSpeed = 30;
-            this.Acceleration = 100;
-            this.TurningSpeed = 100;
-            this.SlowingFactor = .95f;
-            this.CarEffectDuration = 10;
 
             this.State = CarState.Normal;
             this.carEffectTimer = new Timer(this.ResetCarState);
@@ -265,14 +300,6 @@ namespace Assets.Scripts.Driving
             foreach (var entry in Enum.GetValues(typeof(Axis)))
             {
                 this.axis.Add(((Axis)entry).AsString(EnumFormat.Description));
-            }
-        }
-
-        private void ResetCarState(object state)
-        {
-            if (this.State != CarState.Dead)
-            {
-                this.State = CarState.Normal;
             }
         }
     }
