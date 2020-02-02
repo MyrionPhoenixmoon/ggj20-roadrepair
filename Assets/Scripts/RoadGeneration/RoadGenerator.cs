@@ -21,13 +21,17 @@ public class RoadGenerator : MonoBehaviour {
     public RoadPart[] StartParts;
     public RoadType[] RoadTypes;
 
+    public int NumberOfElements = 50;
+
+    public RoadPart[] EndParts;
+
 
     public RoadPart lastRoad;
     public RoadPart fistRoad;
 
     public RoadPart currentRoad;
 
-
+    int numberOfElements;
 
     public Obstacle CurrentObstacle {
         get {
@@ -84,16 +88,33 @@ public class RoadGenerator : MonoBehaviour {
     }
 
     void SpawnNewRoad() {
-        Debug.Log("Spawn road");
-        int roadType = (int)lastRoad.StreetEnd;
-        int rnd = Random.Range(0, RoadTypes[roadType].PossibleRoads.Length);
-        RoadPart newPart = Instantiate(RoadTypes[roadType].PossibleRoads[rnd]);
-        roadParts.Add(newPart);
-        activeRoadParts.Add(newPart);
-        newPart.transform.parent = this.transform;
-        newPart.transform.position = new Vector3(lastRoad.transform.position.x + lastRoad.Length / 2 + newPart.Length/2, 0, 0);
-        lastRoad = roadParts[roadParts.Count - 1];
-        newPart.Init();
+        if (numberOfElements < NumberOfElements) {
+
+
+            Debug.Log("Spawn road");
+            int roadType = (int)lastRoad.StreetEnd;
+            int rnd = Random.Range(0, RoadTypes[roadType].PossibleRoads.Length);
+            RoadPart newPart = Instantiate(RoadTypes[roadType].PossibleRoads[rnd]);
+            roadParts.Add(newPart);
+            activeRoadParts.Add(newPart);
+            numberOfElements++;
+            newPart.transform.parent = this.transform;
+            newPart.transform.position = new Vector3(lastRoad.transform.position.x + lastRoad.Length / 2 + newPart.Length / 2, 0, 0);
+            lastRoad = roadParts[roadParts.Count - 1];
+            newPart.Init();
+        } else if (NumberOfElements==numberOfElements) {
+            int roadType = (int)lastRoad.StreetEnd;
+            RoadPart newPart = Instantiate(EndParts[roadType]);
+            roadParts.Add(newPart);
+            activeRoadParts.Add(newPart);
+            numberOfElements++;
+            newPart.transform.parent = this.transform;
+            newPart.transform.position = new Vector3(lastRoad.transform.position.x + lastRoad.Length / 2 + newPart.Length / 2, 0, 0);
+            lastRoad = roadParts[roadParts.Count - 1];
+
+            numberOfElements++;
+
+        }
     }
 
     void ClearRoad() {
