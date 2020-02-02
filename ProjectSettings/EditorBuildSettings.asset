@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScreen.unity
     guid: 99f5674887edfae499999522530b805a
   - enabled: 1
-    path: Assets/Scenes/RoadGenerationTest.unity
-    guid: c7bf03757b2b1884591d6e0317859ffa
+    path: Assets/Scenes/GameScene.unity
+    guid: 5d73bce1f1811cb4f89e4384a0dc08a9
+  - enabled: 0
+    path: Assets/Scenes/RoadGenerationTest 1.unity
+    guid: 2f730cd83a0e90a48b9ce64414f3dc00
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: b455e8a5fa7f05dde878548436c849eb
+  - enabled: 1
+    path: Assets/Scenes/LoseScreen.unity
+    guid: b638594c8b2980f19a21fb2bf8eff18e
   m_configObjects: {}

@@ -1,15 +1,15 @@
-﻿using System.Threading;
-
-namespace Assets.Scripts.Driving
+﻿namespace Assets.Scripts.Driving
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
 
     using Assets.Scripts.Enums;
 
     using EnumsNET;
 
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     using Random = System.Random;
 
@@ -23,18 +23,69 @@ namespace Assets.Scripts.Driving
 
         private List<string> axis;
 
+        [SerializeField]
+        private int carEffectDuration;
+
+        private Timer carEffectTimer;
+        private Timer sceneTransitionTimer;
+
+        public int sceneTransitionDelay;
+        private bool sceneTransitionTrigger = false;
+
         private Dictionary<string, float> currentForces;
 
         [SerializeField]
-        public int MaxSpeed { get; set; }
+        private int maxSpeed;
 
-        private Timer carEffectTimer;
+        [SerializeField]
+        private float slowingFactor;
 
-        public Rigidbody RigidBody { get; private set; }
+        [SerializeField]
+        private float turningSpeed;
+
+        [SerializeField]
+        private float acceleration;
+
+        public float Acceleration
+        {
+            get => this.acceleration;
+            private set => this.acceleration = value;
+        }
+
+        public int CarEffectDuration
+        {
+            get => this.carEffectDuration;
+            private set => this.carEffectDuration = value;
+        }
 
         public int CurrentSpeed { get; private set; }
 
+        public int MaxSpeed
+        {
+            get => this.maxSpeed;
+            private set => this.maxSpeed = value;
+        }
+
+        public Rigidbody RigidBody { get; private set; }
+
+        public float SlowingFactor
+        {
+            get => this.slowingFactor;
+            private set => this.slowingFactor = value;
+        }
+
         public CarState State { get; private set; }
+
+        public float TurningSpeed
+        {
+            get => this.turningSpeed;
+            private set => this.turningSpeed = value;
+        }
+
+        private void ApplyBrakingForce(bool isBraking)
+        {
+            this.RigidBody.velocity = isBraking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
+        }
 
         private void ApplyDirections(float acceleration, bool isBraking, float turningDirection)
         {
@@ -53,12 +104,6 @@ namespace Assets.Scripts.Driving
             if (this.State == CarState.Slowed)
             {
                 this.RigidBody.velocity *= this.SlowingFactor;
-            }
-            else if (this.State == CarState.Wobbly)
-            {
-                var random = new Random();
-                acceleration *= random.Next(-1, 1);
-                turningDirection *= random.Next(-1, 1);
             }
 
             if (Math.Abs(acceleration) > .3f)
@@ -83,36 +128,6 @@ namespace Assets.Scripts.Driving
             }
         }
 
-        public float SlowingFactor { get; set; }
-
-        [SerializeField]
-        public float TurningSpeed { get; set; }
-
-        [SerializeField]
-        public float Acceleration { get; set; }
-
-        private void ApplyBrakingForce(bool isBraking)
-        {
-            this.RigidBody.velocity = isBraking ? this.RigidBody.velocity * 0.9f : this.RigidBody.velocity;
-        }
-
-        private void LimitTurningSpeed(ref float turningDirection, float velocity)
-        {
-            this.RigidBody.maxAngularVelocity = AngularVelocityCap - (0.03f * velocity);
-
-            if (velocity < 2f)
-            {
-                this.RigidBody.angularVelocity = new Vector3(0, 0, 0);
-                turningDirection = 0;
-            }
-        }
-
-        private int DetermineCurrentCarDirection()
-        {
-            var direction = this.transform.InverseTransformVector(this.RigidBody.velocity).z > 0 ? 1 : -1;
-            return direction;
-        }
-
         private void CapAtMaxSpeed()
         {
             if (this.RigidBody.velocity.magnitude > this.MaxSpeed)
@@ -125,28 +140,55 @@ namespace Assets.Scripts.Driving
             }
         }
 
+        private bool CheckForBraking()
+        {
+            var isbraking = this.currentForces.ContainsKey(Axis.Jump.ToString());
+            return isbraking;
+        }
+
+        private int DetermineCurrentCarDirection()
+        {
+            var direction = this.transform.InverseTransformVector(this.RigidBody.velocity).z > 0 ? 1 : -1;
+            return direction;
+        }
+
         // Update is called once per frame
         private void FixedUpdate()
         {
+            if (this.sceneTransitionTrigger){
+                this.WinOrLose();
+            }
+
             if (this.State == CarState.Dead)
             {
                 this.SetCurrentSpeed();
+                this.sceneTransitionTimer = new Timer(this.SetTransitionTrigger, null, this.sceneTransitionDelay * 1000, 0);
                 return;
             }
+
             this.GetAxisValues();
 
-            var acceleration = this.GetAcceleration();
-            var turningDirection = this.GetTurningDirection();
-            var isBraking = this.CheckForBraking();
+            float currentAcceleration;
+            float currentTurningDirection;
+            var isBraking = false;
 
-            this.ApplyDirections(acceleration, isBraking, turningDirection);
+
+            if (this.State != CarState.Wobbly)
+            {
+                currentAcceleration = this.GetAcceleration();
+                currentTurningDirection = this.GetTurningDirection();
+                isBraking = this.CheckForBraking();
+            }
+            else
+            {
+                var random = new Random();
+                currentAcceleration = (float)random.Next(-100, 100) / 100f;
+                currentTurningDirection = (float)random.Next(-100, 100) / 100f;
+            }
+
+            this.ApplyDirections(currentAcceleration, isBraking, currentTurningDirection);
             this.CapAtMaxSpeed();
             this.SetCurrentSpeed();
-        }
-
-        private void SetCurrentSpeed()
-        {
-            this.CurrentSpeed = (int)(this.RigidBody.velocity.magnitude * 10);
         }
 
         private float GetAcceleration()
@@ -173,12 +215,6 @@ namespace Assets.Scripts.Driving
             }
         }
 
-        private bool CheckForBraking()
-        {
-            var isbraking = this.currentForces.ContainsKey(Axis.Jump.ToString());
-            return isbraking;
-        }
-
         private float GetTurningDirection()
         {
             var turningDirection = 0f;
@@ -190,23 +226,35 @@ namespace Assets.Scripts.Driving
             return turningDirection;
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void LimitTurningSpeed(ref float turningDirection, float velocity)
         {
-            var obstacle = collision.collider.GetComponent<Obstacle>();
+            this.RigidBody.maxAngularVelocity = AngularVelocityCap - (0.03f * velocity);
+
+            if (velocity < 3f)
+            {
+                this.RigidBody.angularVelocity = new Vector3(0, 0, 0);
+                turningDirection = 0;
+            }
+        }
+
+        public void Triggered(Obstacle obstacle)
+        {
+            if (this.State == CarState.Dead)
+            {
+                return;
+            }
+
             if (obstacle != null)
             {
                 var obstacleType = obstacle.Type;
-                this.carEffectTimer.Change(this.CarEffectDuration * 1000, 0);
+                this.ResetTimerDuration();
 
-                if (this.State == CarState.Normal)
+                if (this.State != CarState.Immune)
                 {
                     switch (obstacleType)
                     {
                         case ObstacleType.Powerup:
                             this.State = CarState.Immune;
-                            break;
-                        case ObstacleType.Crash:
-                            this.State = CarState.Dead;
                             break;
                         case ObstacleType.Drift:
                             this.State = CarState.Wobbly;
@@ -214,24 +262,28 @@ namespace Assets.Scripts.Driving
                         case ObstacleType.Slowdown:
                             this.State = CarState.Slowed;
                             break;
-                        default:
-                            this.State = CarState.Normal;
-                            break;
                     }
                 }
-                else if (this.State != CarState.Dead)
+            }
+        }
+
+        private void OnTriggerEnter(Collider collider)
+        {
+            var obstacle = collider.GetComponent<Obstacle>();
+            if (obstacle != null)
+            {
+                var obstacleType = obstacle.Type;
+                this.ResetTimerDuration();
+
+                if (this.State != CarState.Immune)
                 {
                     switch (obstacleType)
                     {
                         case ObstacleType.Powerup:
                             this.State = CarState.Immune;
                             break;
-                        case ObstacleType.Crash:
-                            if (this.State != CarState.Immune)
-                            {
-                                this.State = CarState.Dead;
-                            }
-
+                        case ObstacleType.Drift:
+                            this.State = CarState.Wobbly;
                             break;
                         case ObstacleType.Slowdown:
                             this.State = CarState.Slowed;
@@ -239,11 +291,40 @@ namespace Assets.Scripts.Driving
                     }
                 }
             }
-
-            //TODO: Car goes booooom
         }
 
-        public int CarEffectDuration { get; set; }
+        private void OnCollisionEnter(Collision collision)
+        {
+            var obstacle = collision.collider.GetComponent<Obstacle>();
+            if (obstacle != null)
+            {
+                var obstacleType = obstacle.Type;
+                this.ResetTimerDuration();
+
+                if (this.State != CarState.Immune && obstacleType == ObstacleType.Crash)
+                {
+                    this.State = CarState.Dead;
+                }
+            }
+        }
+
+        private void ResetTimerDuration()
+        {
+            this.carEffectTimer.Change(this.CarEffectDuration * 1000, Timeout.Infinite);
+        }
+
+        private void ResetCarState(object state)
+        {
+            if (this.State != CarState.Dead)
+            {
+                this.State = CarState.Normal;
+            }
+        }
+
+        private void SetCurrentSpeed()
+        {
+            this.CurrentSpeed = (int)(this.RigidBody.velocity.magnitude * 10);
+        }
 
         // Start is called before the first frame update
         private void Start()
@@ -251,11 +332,6 @@ namespace Assets.Scripts.Driving
             this.RigidBody = this.gameObject.GetComponent<Rigidbody>();
 
             this.RigidBody.maxAngularVelocity = AngularVelocityCap;
-            this.MaxSpeed = 30;
-            this.Acceleration = 100;
-            this.TurningSpeed = 100;
-            this.SlowingFactor = .95f;
-            this.CarEffectDuration = 10;
 
             this.State = CarState.Normal;
             this.carEffectTimer = new Timer(this.ResetCarState);
@@ -268,12 +344,22 @@ namespace Assets.Scripts.Driving
             }
         }
 
-        private void ResetCarState(object state)
-        {
-            if (this.State != CarState.Dead)
-            {
-                this.State = CarState.Normal;
+        private void SetTransitionTrigger(object state){
+            this.sceneTransitionTrigger = true;
+        }
+
+        private void WinOrLose(){
+        
+            if (this.State != CarState.Dead){
+                SceneManager.LoadScene(2);
             }
+            if (this.State == CarState.Dead){
+                SceneManager.LoadScene(3);
+            }
+            else {
+                return;
+            }
+
         }
     }
 }
