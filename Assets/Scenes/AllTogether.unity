@@ -247,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 1151958922825211594, guid: 300a4c236b3a172418c32373eec3889a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.86
+      value: 11.42
       objectReference: {fileID: 0}
     - target: {fileID: 1151958922825211594, guid: 300a4c236b3a172418c32373eec3889a,
         type: 3}
@@ -345,8 +345,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5277872, y: 1.2325538, z: 4.949284}
-  m_Center: {x: 0, y: 0.86, z: 0}
+  m_Size: {x: 1.72, y: 1.2325538, z: 2.94}
+  m_Center: {x: 0, y: 0.85, z: 0.78}
 --- !u!1 &1269554285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,9 +1369,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5407729843938837854, guid: b1538ce7584b5314c9e0f42fcc67b9c5,
         type: 3}
+      propertyPath: RoadTypes.Array.data[2].PossibleRoads.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5407729843938837854, guid: b1538ce7584b5314c9e0f42fcc67b9c5,
+        type: 3}
       propertyPath: PlayerCar
       value: 
       objectReference: {fileID: 758325504}
+    - target: {fileID: 5407729843938837854, guid: b1538ce7584b5314c9e0f42fcc67b9c5,
+        type: 3}
+      propertyPath: NumberOfElements
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5407729843938837855, guid: b1538ce7584b5314c9e0f42fcc67b9c5,
         type: 3}
       propertyPath: m_LocalPosition.x
