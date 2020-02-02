@@ -11,8 +11,6 @@
     using UnityEngine;
     using UnityEngine.SceneManagement;
 
-    using Random = System.Random;
-
     public class Car : MonoBehaviour
     {
         private const float AngularVelocityCap = 2f;
@@ -21,6 +19,11 @@
 
         private const float InertiaDampenerFactor = -.05f;
 
+        public int sceneTransitionDelay;
+
+        [SerializeField]
+        private float acceleration;
+
         private List<string> axis;
 
         [SerializeField]
@@ -28,18 +31,16 @@
 
         private Timer carEffectTimer;
 
-        private Timer sceneTransitionTimer;
-
-        public int sceneTransitionDelay;
-
-        private bool sceneTransitionTrigger = false;
+        private Dictionary<string, float> currentForces;
 
         private bool deathTimerStarted;
 
-        private Dictionary<string, float> currentForces;
-
         [SerializeField]
         private int maxSpeed;
+
+        private Timer sceneTransitionTimer;
+
+        private bool sceneTransitionTrigger = false;
 
         [SerializeField]
         private float slowingFactor;
@@ -47,14 +48,13 @@
         [SerializeField]
         private float turningSpeed;
 
-        [SerializeField]
-        private float acceleration;
-
         public float Acceleration
         {
             get => this.acceleration;
             private set => this.acceleration = value;
         }
+
+        public AudioSource Audio;
 
         public int CarEffectDuration
         {
@@ -170,8 +170,10 @@
                 if (!this.deathTimerStarted)
                 {
                     this.deathTimerStarted = true;
+                    this.Audio.PlayOneShot(this.LoseAudio);
                     this.sceneTransitionTimer.Change(this.sceneTransitionDelay * 1000, 0);
                 }
+
                 return;
             }
 
@@ -237,50 +239,9 @@
             }
         }
 
-        private void OnTriggerEnter(Collider collider)
+        private void Lose()
         {
-            if (this.State == CarState.Dead)
-            {
-                return;
-            }
-
-            this.ResolveGameEnding(collider);
-            this.ResolveObstacleHit(collider);
-        }
-
-        private void ResolveGameEnding(Collider collider)
-        {
-            var finishLine = collider.GetComponent<FinishLine>();
-            if (finishLine != null)
-            {
-                this.Win();
-            }
-        }
-
-        private void ResolveObstacleHit(Collider collider)
-        {
-            var obstacle = collider.GetComponent<Obstacle>();
-            if (obstacle != null)
-            {
-                var obstacleType = obstacle.Type;
-                this.ResetTimerDuration();
-
-                if (this.State != CarState.Immune)
-                {
-                    switch (obstacleType)
-                    {
-                        case ObstacleType.Powerup:
-                            this.State = CarState.Immune;
-                            break;
-                        case ObstacleType.Drift:
-                            this.State = CarState.Wobbly;
-                            break;
-                        case ObstacleType.Slowdown:
-                            this.State = CarState.Slowed;
-                            break;
-                    }
-                }
-            }
+            SceneManager.LoadScene(3);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -298,9 +259,15 @@
             }
         }
 
-        private void ResetTimerDuration()
+        private void OnTriggerEnter(Collider collider)
         {
-            this.carEffectTimer.Change(this.CarEffectDuration * 1000, 0);
+            if (this.State == CarState.Dead)
+            {
+                return;
+            }
+
+            this.ResolveGameEnding(collider);
+            this.ResolveObstacleHit(collider);
         }
 
         private void ResetCarState(object state)
@@ -312,9 +279,58 @@
             }
         }
 
+        private void ResetTimerDuration()
+        {
+            this.carEffectTimer.Change(this.CarEffectDuration * 1000, 0);
+        }
+
+        private void ResolveGameEnding(Collider collider)
+        {
+            var finishLine = collider.GetComponent<FinishLine>();
+            if (finishLine != null)
+            {
+                this.Audio.PlayOneShot(this.WinAudio);
+                this.Win();
+            }
+        }
+
+        private void ResolveObstacleHit(Collider collider)
+        {
+            var obstacle = collider.GetComponent<Obstacle>();
+            if (obstacle != null)
+            {
+                var obstacleType = obstacle.Type;
+                this.ResetTimerDuration();
+
+                if (this.State != CarState.Immune)
+                {
+                    switch (obstacleType)
+                    {
+                        case ObstacleType.Powerup:
+                            this.Audio.PlayOneShot(this.PowerUpAudio);
+                            this.State = CarState.Immune;
+                            break;
+                        case ObstacleType.Drift:
+                            this.Audio.PlayOneShot(this.WobblyAudio);
+                            this.State = CarState.Wobbly;
+                            break;
+                        case ObstacleType.Slowdown:
+                            this.Audio.PlayOneShot(this.SlowAudio);
+                            this.State = CarState.Slowed;
+                            break;
+                    }
+                }
+            }
+        }
+
         private void SetCurrentSpeed()
         {
             this.CurrentSpeed = (int)(this.RigidBody.velocity.magnitude * 10);
+        }
+
+        private void SetTransitionTrigger(object state)
+        {
+            this.sceneTransitionTrigger = true;
         }
 
         // Start is called before the first frame update
@@ -337,19 +353,23 @@
             }
         }
 
-        private void SetTransitionTrigger(object state)
-        {
-            this.sceneTransitionTrigger = true;
-        }
-
         private void Win()
         {
             SceneManager.LoadScene(2);
         }
 
-        private void Lose()
-        {
-            SceneManager.LoadScene(3);
-        }
+        public AudioClip PowerUpAudio;
+
+        public AudioClip WobblyAudio;
+
+        public AudioClip CrashAudio;
+
+        public AudioClip SlowAudio;
+
+        public AudioClip WallAudio;
+
+        public AudioClip WinAudio;
+
+        public AudioClip LoseAudio;
     }
 }
