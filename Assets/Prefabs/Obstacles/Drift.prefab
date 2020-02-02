@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3963129880984158736}
   - component: {fileID: 8573839527839380137}
   - component: {fileID: 4811619280135113715}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Drift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +156,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c2bb44ac99b84f5469cdf775c9e92de0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2bb44ac99b84f5469cdf775c9e92de0, type: 3}
 --- !u!1 &8257891853982868351 stripped
@@ -241,6 +246,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: driftsquare
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c2bb44ac99b84f5469cdf775c9e92de0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2bb44ac99b84f5469cdf775c9e92de0, type: 3}

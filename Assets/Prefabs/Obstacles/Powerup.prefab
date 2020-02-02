@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 284485113995153296}
   - component: {fileID: 470180446769288299}
   - component: {fileID: 6261234696290653980}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 03c7d198374db664c9f26a1824df0cdd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03c7d198374db664c9f26a1824df0cdd, type: 3}
 --- !u!1 &7861099822823261788 stripped
@@ -231,6 +236,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: turboInactive
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 03c7d198374db664c9f26a1824df0cdd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03c7d198374db664c9f26a1824df0cdd, type: 3}
