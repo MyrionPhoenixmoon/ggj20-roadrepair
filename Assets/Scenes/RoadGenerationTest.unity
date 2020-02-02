@@ -439,6 +439,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: carEffectDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: sceneTransitionDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: slowingFactor
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: turningSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: acceleration
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1151958922825211594, guid: 300a4c236b3a172418c32373eec3889a,
         type: 3}
       propertyPath: m_LocalPosition.x
