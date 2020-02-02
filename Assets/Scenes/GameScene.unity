@@ -1365,6 +1365,36 @@ PrefabInstance:
       propertyPath: sceneTransitionDelay
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: PowerUpAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: e8e0c895722af4f6c938eb2a43cd8c94, type: 3}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: CrashAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 12ecb227e99244859807f330df059530, type: 3}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: SlowAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 735cf0df1786a446b9a71afe15ad6f94, type: 3}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: WallAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: ec76897c3ddf449ce8ec49f92914a27f, type: 3}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: WinAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: ab50c944718594d4daa49b979b15a33c, type: 3}
+    - target: {fileID: 1151958922825211593, guid: 300a4c236b3a172418c32373eec3889a,
+        type: 3}
+      propertyPath: LoseAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 034e5aaf38e764a2191d112a400962e9, type: 3}
     - target: {fileID: 1151958922825211594, guid: 300a4c236b3a172418c32373eec3889a,
         type: 3}
       propertyPath: m_LocalPosition.x
