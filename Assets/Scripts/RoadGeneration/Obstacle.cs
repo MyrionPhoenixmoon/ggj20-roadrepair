@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Scripts.Driving;
+
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
@@ -10,18 +13,28 @@ public class Obstacle : MonoBehaviour
 
 
 
-    public void Repair() {
-        if (Repaired!=null) {
+    public void Repair()
+    {
+        if (Repaired != null)
+        {
             Repaired.SetActive(true);
         }
-        if (Broken!=null) {
+        if (Broken != null)
+        {
             Destroy(Broken.gameObject);
         }
+    }
+
+    public void OnTriggerEnter(Collider collider)
+    {
+        var collidingObject = collider.GetComponent<Car>();
+        collidingObject?.Triggered(this);
     }
 }
 
 
-public enum ObstacleType {
+public enum ObstacleType
+{
     Powerup,
     Crash,
     Drift,

@@ -100,12 +100,6 @@
             {
                 this.RigidBody.velocity *= this.SlowingFactor;
             }
-            else if (this.State == CarState.Wobbly)
-            {
-                var random = new Random();
-                acceleration *= random.Next(-1, 1);
-                turningDirection *= random.Next(-1, 1);
-            }
 
             if (Math.Abs(acceleration) > .3f)
             {
@@ -164,11 +158,25 @@
 
             this.GetAxisValues();
 
-            var acceleration = this.GetAcceleration();
-            var turningDirection = this.GetTurningDirection();
-            var isBraking = this.CheckForBraking();
+            float currentAcceleration;
+            float currentTurningDirection;
+            var isBraking = false;
 
-            this.ApplyDirections(acceleration, isBraking, turningDirection);
+
+            if (this.State != CarState.Wobbly)
+            {
+                currentAcceleration = this.GetAcceleration();
+                currentTurningDirection = this.GetTurningDirection();
+                isBraking = this.CheckForBraking();
+            }
+            else
+            {
+                var random = new Random();
+                currentAcceleration = (float)random.Next(-100, 100) / 100f;
+                currentTurningDirection = (float)random.Next(-100, 100) / 100f;
+            }
+
+            this.ApplyDirections(currentAcceleration, isBraking, currentTurningDirection);
             this.CapAtMaxSpeed();
             this.SetCurrentSpeed();
         }
@@ -219,23 +227,24 @@
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
+        public void Triggered(Obstacle obstacle)
         {
-            var obstacle = collision.collider.GetComponent<Obstacle>();
+            if (this.State == CarState.Dead)
+            {
+                return;
+            }
+
             if (obstacle != null)
             {
                 var obstacleType = obstacle.Type;
-                this.carEffectTimer.Change(this.CarEffectDuration * 1000, 0);
+                this.ResetTimerDuration();
 
-                if (this.State == CarState.Normal)
+                if (this.State != CarState.Immune)
                 {
                     switch (obstacleType)
                     {
                         case ObstacleType.Powerup:
                             this.State = CarState.Immune;
-                            break;
-                        case ObstacleType.Crash:
-                            this.State = CarState.Dead;
                             break;
                         case ObstacleType.Drift:
                             this.State = CarState.Wobbly;
@@ -243,24 +252,28 @@
                         case ObstacleType.Slowdown:
                             this.State = CarState.Slowed;
                             break;
-                        default:
-                            this.State = CarState.Normal;
-                            break;
                     }
                 }
-                else if (this.State != CarState.Dead)
+            }
+        }
+
+        private void OnTriggerEnter(Collider collider)
+        {
+            var obstacle = collider.GetComponent<Obstacle>();
+            if (obstacle != null)
+            {
+                var obstacleType = obstacle.Type;
+                this.ResetTimerDuration();
+
+                if (this.State != CarState.Immune)
                 {
                     switch (obstacleType)
                     {
                         case ObstacleType.Powerup:
                             this.State = CarState.Immune;
                             break;
-                        case ObstacleType.Crash:
-                            if (this.State != CarState.Immune)
-                            {
-                                this.State = CarState.Dead;
-                            }
-
+                        case ObstacleType.Drift:
+                            this.State = CarState.Wobbly;
                             break;
                         case ObstacleType.Slowdown:
                             this.State = CarState.Slowed;
@@ -268,8 +281,26 @@
                     }
                 }
             }
+        }
 
-            // TODO: Car goes booooom
+        private void OnCollisionEnter(Collision collision)
+        {
+            var obstacle = collision.collider.GetComponent<Obstacle>();
+            if (obstacle != null)
+            {
+                var obstacleType = obstacle.Type;
+                this.ResetTimerDuration();
+
+                if (this.State != CarState.Immune && obstacleType == ObstacleType.Crash)
+                {
+                    this.State = CarState.Dead;
+                }
+            }
+        }
+
+        private void ResetTimerDuration()
+        {
+            this.carEffectTimer.Change(this.CarEffectDuration * 1000, Timeout.Infinite);
         }
 
         private void ResetCarState(object state)
