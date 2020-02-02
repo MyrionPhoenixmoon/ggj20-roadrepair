@@ -31,7 +31,7 @@ public class RunTimer : MonoBehaviour
                 ts.Milliseconds / 10);
 
             this.text.text = elapsedTime;
-            this.finalTime = elapsedTime;
+            RunTimer.finalTime = elapsedTime;
         }
     }
 }
