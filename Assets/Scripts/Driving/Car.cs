@@ -34,6 +34,8 @@
 
         private bool sceneTransitionTrigger = false;
 
+        private bool deathTimerStarted;
+
         private Dictionary<string, float> currentForces;
 
         [SerializeField]
@@ -157,14 +159,19 @@
         // Update is called once per frame
         private void FixedUpdate()
         {
-            if (this.sceneTransitionTrigger){
+            if (this.sceneTransitionTrigger)
+            {
                 this.WinOrLose();
             }
 
             if (this.State == CarState.Dead)
             {
                 this.SetCurrentSpeed();
-                this.sceneTransitionTimer.Change(this.sceneTransitionDelay * 1000, 0);
+                if (!this.deathTimerStarted)
+                {
+                    this.deathTimerStarted = true;
+                    this.sceneTransitionTimer.Change(this.sceneTransitionDelay * 1000, 0);
+                }
                 return;
             }
 
@@ -304,6 +311,7 @@
             this.State = CarState.Normal;
             this.carEffectTimer = new Timer(this.ResetCarState);
             this.sceneTransitionTimer = new Timer(this.SetTransitionTrigger);
+            this.deathTimerStarted = false;
 
             this.currentForces = new Dictionary<string, float>();
             this.axis = new List<string>();
@@ -313,19 +321,24 @@
             }
         }
 
-        private void SetTransitionTrigger(object state){
+        private void SetTransitionTrigger(object state)
+        {
             this.sceneTransitionTrigger = true;
         }
 
-        private void WinOrLose(){
-        
-            if (this.State != CarState.Dead){
+        private void WinOrLose()
+        {
+
+            if (this.State != CarState.Dead)
+            {
                 SceneManager.LoadScene(2);
             }
-            if (this.State == CarState.Dead){
+            if (this.State == CarState.Dead)
+            {
                 SceneManager.LoadScene(3);
             }
-            else {
+            else
+            {
                 return;
             }
 
